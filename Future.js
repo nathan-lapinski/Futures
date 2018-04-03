@@ -1,5 +1,5 @@
 /**
- * A Future is really just pub/sub using monads
+ * A Future is really just pub/sub using functors
  */
 function Future() {
     this.subscribers = [];
@@ -25,10 +25,24 @@ Future.prototype.complete = function(value) {
     this.subscribers = [];
 }
 
+// Simply wraps a value in a Future
+// unit :: Val -> Future<Val>
 Future.prototype.unit = function(value) {
     const f = new Future();
     f.complete(value);
     return f;
+}
+
+Future.prototype.fmap = function(fn) {
+    const f = new Future();
+    this.subscribe((val) => {
+        f.complete(fn(val));
+    });
+    return f;
+}
+
+Future.lift = function(fn) {
+    return (future) => future.fmap(fn);
 }
 
 // Utilities
@@ -48,3 +62,11 @@ const delayedValueFunc = function(value='default val', delay=1000) {
 traceFuture(delayedValueFunc());
 
 traceFuture(new Future().unit('I complete immediately'));
+
+traceFuture(new Future().unit(5).fmap(x => x*x).fmap(y => y*2));
+
+const square = (x) => x * x;
+
+const liftedSquare = Future.lift(square);
+
+traceFuture(liftedSquare(new Future().unit(10)));
