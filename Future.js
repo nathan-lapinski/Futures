@@ -25,6 +25,14 @@ Future.prototype.complete = function(value) {
     this.subscribers = [];
 }
 
+Future.prototype.delay = function(val, delay) {
+    const f = new Future();
+    setTimeout(() => {
+        f.complete(val);
+    }, delay);
+    return f;
+}
+
 // Simply wraps a value in a Future
 // unit :: Val -> Future<Val>
 Future.prototype.unit = function(value) {
@@ -39,6 +47,20 @@ Future.prototype.fmap = function(fn) {
         f.complete(fn(val));
     });
     return f;
+}
+
+Future.prototype.flatten = function() {
+    const f = new Future();
+    this.subscribe((future2) => {
+        future2.subscribe((val) => {
+            f.complete(val);
+        });
+    });
+    return f;
+}
+
+Future.prototype.flatMap = function(fn) {
+    return this.fmap(fn).flatten();
 }
 
 Future.lift = function(fn) {
