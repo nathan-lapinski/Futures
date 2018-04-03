@@ -25,6 +25,12 @@ Future.prototype.complete = function(value) {
     this.subscribers = [];
 }
 
+Future.prototype.unit = function(value) {
+    const f = new Future();
+    f.complete(value);
+    return f;
+}
+
 // Utilities
 function traceFuture(future) {
     future.subscribe(val => console.log(val));
@@ -40,3 +46,5 @@ const delayedValueFunc = function(value='default val', delay=1000) {
 }
 
 traceFuture(delayedValueFunc());
+
+traceFuture(new Future().unit('I complete immediately'));
