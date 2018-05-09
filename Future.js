@@ -3,6 +3,7 @@
  */
 function Future() {
     this.subscribers = [];
+    this.completed = false;
 }
 
 module.exports = {

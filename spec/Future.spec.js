@@ -1,15 +1,22 @@
 const Future = require('../Future').Future;
 
 describe('Future', () => {
+  let future;
+
+  beforeEach(() => {
+    future = new Future();
+  });
 
   it('should be callable as a constructor', () => {
-    const future = new Future();
     expect(future).toBeDefined();
   });
 
   it('should maintain a list of registered callbacks', () => {
-    const future = new Future();
     expect(future.subscribers).toBeDefined();
+  });
+
+  it('should not be completed, by default', () => {
+    expect(future.completed).toBe(false);
   });
 
 });
