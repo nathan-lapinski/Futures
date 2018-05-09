@@ -1,5 +1,5 @@
 /**
- * A Future is really just pub/sub using functors
+ * A Future is really just pub/sub with composition
  */
 function Future() {
     this.subscribers = [];
