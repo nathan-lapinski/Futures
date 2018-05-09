@@ -19,4 +19,27 @@ describe('Future', () => {
     expect(future.completed).toBe(false);
   });
 
+  describe('ready', () => {
+    it('should register a callback if it is not ready', () => {
+      const cb = () => {};
+      expect(future.subscribers.length).toBe(0);
+      expect(future.completed).toBe(false);
+
+      future.ready(cb);
+
+      expect(future.subscribers.length).toBe(1);
+    });
+
+    it('should call a subscriber immediatle if it has already completed', () => {
+      const cb1 = jasmine.createSpy();
+
+      future.completed = true;
+
+      future.ready(cb1);
+
+      expect(cb1).toHaveBeenCalled();
+
+    });
+  });
+
 });
