@@ -126,6 +126,25 @@ describe('Future', () => {
     });
   });
 
+  describe('delay', () => {
+    it('should return a future immediately, which is not completed', () => {
+      const future = Future.delay(123, 0);
+      expect(future).toBeDefined();
+      expect(future.completed).toBe(false);
+    });
+
+    it('should complete the future after the delay time has passed', (done) => {
+      const future = Future.delay(123, 500);
+      expect(future).toBeDefined();
+      expect(future.completed).toBe(false);
+      future.ready((v) => {
+        expect(v).toBe(123);
+        expect(future.completed).toBe(true);
+        done();
+      });
+    });
+  });
+
   describe('logging utility', () => {
     it('should register a logging callback on the future it receives as an argument', () => {
       const future = jasmine.createSpyObj(Future, ['ready']);

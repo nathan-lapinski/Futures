@@ -35,6 +35,15 @@ Future.unit = function(val) {
     return future;
 }
 
+// delay :: (Value, Number) -> Future<Value>
+Future.delay = function(val, ms) {
+    const future = new Future();
+    setTimeout(() => {
+        future.complete(val);
+    }, ms);
+    return future;
+}
+
 function logF(future) {
     future.ready(v => console.log('Future log: ', v));
 }
