@@ -114,6 +114,18 @@ describe('Future', () => {
     });
   });
 
+  describe('unit', () => {
+    it('should return a new future of the value passed in to it', () => {
+      const future = Future.unit(123);
+      expect(future.value).toBe(123);
+    });
+
+    it('should complete the future immediately', () => {
+      const future = Future.unit(123);
+      expect(future.completed).toBe(true);
+    });
+  });
+
   describe('logging utility', () => {
     it('should register a logging callback on the future it receives as an argument', () => {
       const future = jasmine.createSpyObj(Future, ['ready']);

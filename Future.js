@@ -28,6 +28,13 @@ Future.prototype.complete = function(val) {
     this.subscribers = null;
 }
 
+// unit :: Value -> Future<Value>
+Future.unit = function(val) {
+    const future = new Future();
+    future.complete(val);
+    return future;
+}
+
 function logF(future) {
     future.ready(v => console.log('Future log: ', v));
 }
