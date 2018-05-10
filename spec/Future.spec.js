@@ -145,6 +145,29 @@ describe('Future', () => {
     });
   });
 
+  describe('fmap', () => {
+    it('should return a future', ()=>{
+      const future = Future.unit(1);
+      const future2 = future.fmap(()=>{});
+      expect(future2).toBeDefined();
+    });
+
+    it('should invoke the function passed in as an argument as soon as its future has completed with the completed val', ()=>{
+      const mapFn = jasmine.createSpy();
+      const future = Future.unit(5);
+      const future2 = future.fmap(mapFn);
+      expect(mapFn).toHaveBeenCalledWith(5);
+    });
+
+    it('should be composable', () => {
+      const square = (x) => x * x;
+      const double = (x) => x * 2;
+      const future = Future.unit(5);
+      const future2 = future.fmap(square).fmap(double);
+      expect(future2.value).toBe(50);
+    });
+  });
+
   describe('logging utility', () => {
     it('should register a logging callback on the future it receives as an argument', () => {
       const future = jasmine.createSpyObj(Future, ['ready']);

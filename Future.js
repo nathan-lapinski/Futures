@@ -44,6 +44,13 @@ Future.delay = function(val, ms) {
     return future;
 }
 
+// fmap :: (Future<Value>, fn) -> Future<fn(val)>
+Future.prototype.fmap = function(fn) {
+    const future = new Future();
+    this.ready((val) => future.complete(fn(val)));
+    return future;
+}
+
 function logF(future) {
     future.ready(v => console.log('Future log: ', v));
 }
