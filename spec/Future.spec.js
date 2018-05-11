@@ -168,6 +168,25 @@ describe('Future', () => {
     });
   });
 
+  describe('lift1', () => {
+    it('should take a function over numbers and lift it over Futures', () => {
+      const square = x => x * x;
+      const future = Future.unit(2);
+      const liftedSqaure = Future.lift1(square);
+      expect(liftedSqaure(future).value).toBe(4);
+    });
+
+    it('should take a function over numbers and lift it over Futures, even when async', (done) => {
+      const square = x => x * x;
+      const future = Future.delay(2, 500);
+      const liftedSqaure = Future.lift1(square);
+      setTimeout(() => {
+          expect(liftedSqaure(future).value).toBe(4);
+          done();
+        }, 600);
+    });
+  });
+
   describe('logging utility', () => {
     it('should register a logging callback on the future it receives as an argument', () => {
       const future = jasmine.createSpyObj(Future, ['ready']);

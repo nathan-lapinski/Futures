@@ -51,6 +51,11 @@ Future.prototype.fmap = function(fn) {
     return future;
 }
 
+Future.lift1 = function(fn) {
+    return (future) => future.fmap(fn);
+}
+
+// utility logging function
 function logF(future) {
     future.ready(v => console.log('Future log: ', v));
 }
