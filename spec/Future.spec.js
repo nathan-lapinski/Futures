@@ -187,6 +187,12 @@ describe('Future', () => {
     });
   });
 
+  describe('flatten', () => {
+    it('should flatten a nested future', () => {
+
+    });
+  });
+
   describe('logging utility', () => {
     it('should register a logging callback on the future it receives as an argument', () => {
       const future = jasmine.createSpyObj(Future, ['ready']);

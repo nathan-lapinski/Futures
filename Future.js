@@ -51,6 +51,18 @@ Future.prototype.fmap = function(fn) {
     return future;
 }
 
+Future.prototype.flatten = function() {
+    const future = new Future();
+    this.ready((future2) => {
+        future2.ready((val) => future.complete(val));
+    });
+    return future;
+}
+
+Future.prototype.flatMap = function(fn) {
+    return this.fmap(fn).flatten();
+}
+
 Future.lift1 = function(fn) {
     return (future) => future.fmap(fn);
 }

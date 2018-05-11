@@ -85,5 +85,9 @@ function readDirF(path) {
 }
 
 // now...break
-const brokenF = readDirF('./').fmap(dirs => readFileF(dirs[0]));
-logF(brokenF);
+const brokenF = readDirF('./').fmap(files => readFileF(files[0]));
+logF(brokenF.flatten());
+
+// but...what about non-nested values?
+// const borken = Future.unit(5).flatMap(x => x * x);
+// logF(borken);
