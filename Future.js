@@ -67,6 +67,17 @@ Future.lift1 = function(fn) {
     return (future) => future.fmap(fn);
 }
 
+// lift2: ( (a,b) -> c) -> ( (Future<a>,Future<b>) -> Future<c>)
+Future.lift2 = function(fn) {
+  return (fa, fb) => fa.flatMap( val1 => fb.flatMap(val2 => Future.unit(fn(val1, val2))));
+}
+
+Future.lift = function(fn) {
+    return function() {
+
+    };
+}
+
 // utility logging function
 function logF(future) {
     future.ready(v => console.log('Future log: ', v));
