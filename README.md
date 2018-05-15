@@ -40,4 +40,4 @@ It would be better if we could simply use callbacks for event notification inste
     const f2 = f.fmap(x => x * x).fmap(x => x * 2).fmap(x => x + 5); // f2 is a Future which holds a value of 55
 ```
 
-
+Error handling is coming soon!
