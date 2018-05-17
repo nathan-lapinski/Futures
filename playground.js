@@ -91,3 +91,4 @@ logF(brokenF.flatten());
 // but...what about non-nested values?
 // const borken = Future.unit(5).flatMap(x => x * x);
 // logF(borken);
+// TODO: Need to write flatMap so that it won't fail on non-nested values
